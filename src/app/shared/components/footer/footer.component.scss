@@ -1,4 +1,4 @@
-@import '~@angular/material/theming';
+@import "~@angular/material/theming";
 
 $primary: mat-palette($mat-indigo);
 
@@ -10,7 +10,7 @@ footer {
     h3 {
       color: white;
     }
-    input{
+    input {
       color: white;
     }
     ul {
@@ -26,4 +26,8 @@ footer {
       }
     }
   }
+}
+
+#inputEmail {
+  color: black;
 }
