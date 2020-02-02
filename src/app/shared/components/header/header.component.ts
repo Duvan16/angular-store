@@ -15,13 +15,12 @@ export class HeaderComponent implements OnInit {
   total$: Observable<number>;
 
   constructor(
-    /*A esto se le llama inyección de dependencias*/
     private cartService: CartService
   ) {
     this.total$ = this.cartService.cart$
-      .pipe(
-        map(products => products.length)
-      );
+    .pipe(
+      map(products => products.length)
+    );
   }
 
   ngOnInit() {

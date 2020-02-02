@@ -11,7 +11,6 @@ import { environment } from './../../../../environments/environment';
 export class ProductsService {
 
   constructor(
-    /*Inyectar dependencia tipo HttpClient */
     private http: HttpClient
   ) { }
 
@@ -34,5 +33,4 @@ export class ProductsService {
   deleteProduct(id: string) {
     return this.http.delete(`${environment.url_api}/products/${id}`);
   }
-
 }

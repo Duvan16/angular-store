@@ -13,9 +13,6 @@ export class ProductsComponent implements OnInit {
   products: Product[] = [];
 
   constructor(
-    /*Se inyecta como una dependencia
-    se le pone el mismo nombre y la primera siempre va en minuscula-->esto como estandar
-    */
     private productsService: ProductsService
   ) { }
 
@@ -30,9 +27,9 @@ export class ProductsComponent implements OnInit {
 
   fetchProducts() {
     this.productsService.getAllProducts()
-      .subscribe(products => {
-        this.products = products;
-      });
+    .subscribe(products => {
+      this.products = products;
+    });
   }
 
 }

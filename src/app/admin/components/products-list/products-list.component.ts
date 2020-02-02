@@ -22,16 +22,16 @@ export class ProductsListComponent implements OnInit {
 
   fetchProducts() {
     this.productsService.getAllProducts()
-      .subscribe(products => {
-        this.products = products;
-      });
+    .subscribe(products => {
+      this.products = products;
+    });
   }
 
   deleteProduct(id: string) {
     this.productsService.deleteProduct(id)
-      .subscribe(rta => {
-        this.fetchProducts();
-      });
+    .subscribe(rta => {
+      this.fetchProducts();
+    });
   }
 
 }

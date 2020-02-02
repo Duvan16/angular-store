@@ -16,14 +16,15 @@ export class FooterComponent implements OnInit {
       Validators.email
     ]);
     // this.emailField.valueChanges
-    //   .subscribe(value => {
-    //     console.log(value);
-    //   });
+    // .subscribe(value => {
+    //   console.log(value);
+    // });
   }
+
   ngOnInit() {
   }
 
-  sendEmail() {
+  sendMail() {
     if (this.emailField.valid) {
       console.log(this.emailField.value);
     }

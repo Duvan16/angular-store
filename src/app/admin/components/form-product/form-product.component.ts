@@ -30,12 +30,11 @@ export class FormProductComponent implements OnInit {
     if (this.form.valid) {
       const product = this.form.value;
       this.productsService.createProduct(product)
-        .subscribe((newProduct) => {
-          console.log(newProduct);
-          this.router.navigate(['./admin/products']);
-        });
+      .subscribe((newProduct) => {
+        console.log(newProduct);
+        this.router.navigate(['./admin/products']);
+      });
     }
-    console.log(this.form.value);
   }
 
   private buildForm() {
@@ -43,8 +42,8 @@ export class FormProductComponent implements OnInit {
       id: ['', [Validators.required]],
       title: ['', [Validators.required]],
       price: ['', [Validators.required, MyValidators.isPriceValid]],
-      image: '',
-      description: ['', [Validators.required]]
+      image: [''],
+      description: ['', [Validators.required]],
     });
   }
 
