@@ -16,6 +16,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { environment } from './../environments/environment';
 
+import * as Sentry from '@sentry/browser';
+
+// if (environment.production) {
+Sentry.init({
+  dsn: 'https://76124ad0bac94f0d8a43ca4422021b4e@sentry.io/5171000'
+});
+// }
+
+
 @NgModule({
   declarations: [
     AppComponent,

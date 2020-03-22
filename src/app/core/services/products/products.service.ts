@@ -3,6 +3,8 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 import { Product } from './../../models/product.model';
 
+import * as Sentry from '@sentry/browser';
+
 import { environment } from './../../../../environments/environment';
 import { map } from 'rxjs/internal/operators/map';
 import { Observable, throwError } from 'rxjs';
@@ -37,9 +39,9 @@ export class ProductsService {
 
   updateProduct(id: string, changes: Partial<Product>) {
     return this.http.put(`${environment.url_api}/products/${id}`, changes)
-    .pipe(
-      catchError(this.handleError),
-    );
+      .pipe(
+        catchError(this.handleError),
+      );
   }
 
   deleteProduct(id: string) {
@@ -50,7 +52,7 @@ export class ProductsService {
   }
 
   getRandomUsers(): Observable<User[]> {
-    return this.http.get('https://randomuser.me/api/?results=2')
+    return this.http.get('https://randomfsduser.me/api/?results=2')
       .pipe(
         catchError(this.handleError),
         map((response: any) => response.results as User[])
@@ -59,6 +61,7 @@ export class ProductsService {
 
   private handleError(error: HttpErrorResponse) {
     console.log(error);
+    Sentry.captureException(error);
     return throwError('ups algo salio mal');
   }
 
