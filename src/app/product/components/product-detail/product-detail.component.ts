@@ -7,6 +7,8 @@ import { ProductsService } from './../../../core/services/products/products.serv
 import { Product } from './../../../core/models/product.model';
 import { Observable } from 'rxjs';
 
+import * as FileSaver from 'file-saver';
+
 @Component({
   selector: 'app-product-detail',
   templateUrl: './product-detail.component.html',
@@ -72,6 +74,14 @@ export class ProductDetailComponent implements OnInit {
           console.log(error);
         }
       );
+  }
+
+  getFile() {
+    this.productsService.getFile()
+      .subscribe(content => {
+        var blob = new Blob([content], {type: 'text/plain;charset=utf-8'});
+        FileSaver.saveAs(blob, 'archivo.txt');
+      });
   }
 
 }
