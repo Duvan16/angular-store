@@ -1,8 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { ProductsService } from './products.service';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
+
+import { ProductsService } from './products.service';
+
+import { environment } from './../../../../environments/environment';
 
 describe('ProductsService', () => {
 
@@ -14,8 +16,9 @@ describe('ProductsService', () => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule]
     });
-    httpClient = TestBed.get(httpClient);
-    httpTestingController = TestBed.get(httpTestingController);
+
+    httpClient = TestBed.get(HttpClient);
+    httpTestingController = TestBed.get(HttpTestingController);
     service = TestBed.get(ProductsService);
   });
 
@@ -24,6 +27,7 @@ describe('ProductsService', () => {
   });
 
   describe('tests for getAllProducts', () => {
+
     it('should return products', () => {
       // arrange
       const expectData = [
@@ -36,7 +40,7 @@ describe('ProductsService', () => {
         },
         {
           id: '2',
-          title: 'ssdf',
+          title: 'sdfdf',
           price: 1212,
           description: 'asas',
           image: 'img/img.jpg'
@@ -44,6 +48,7 @@ describe('ProductsService', () => {
       ];
       let dataError, dataResponse;
       // act
+      console.log(service);
       service.getAllProducts()
         .subscribe(response => {
           dataResponse = response;
@@ -53,9 +58,10 @@ describe('ProductsService', () => {
       const req = httpTestingController.expectOne(`${environment.url_api}/products`);
       req.flush(expectData);
       // assert
-      expect(dataResponse.lenght).toEqual(2);
+      expect(dataResponse.length).toEqual(2);
       expect(req.request.method).toEqual('GET');
       expect(dataError).toBeUndefined();
     });
+
   });
 });
