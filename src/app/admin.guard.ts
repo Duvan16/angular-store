@@ -13,7 +13,9 @@ export class AdminGuard implements CanActivate {
   constructor(
     private authService: AuthService,
     private router: Router
-  ) { }
+  ) {
+
+  }
 
   canActivate(
     next: ActivatedRouteSnapshot,

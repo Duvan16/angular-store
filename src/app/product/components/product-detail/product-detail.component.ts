@@ -1,13 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { switchMap } from 'rxjs/operators';
-
 import { ProductsService } from './../../../core/services/products/products.service';
 import { Product } from './../../../core/models/product.model';
-import { Observable } from 'rxjs';
-
-import * as FileSaver from 'file-saver';
 
 @Component({
   selector: 'app-product-detail',
@@ -16,7 +11,7 @@ import * as FileSaver from 'file-saver';
 })
 export class ProductDetailComponent implements OnInit {
 
-  product$: Observable<Product>;
+  product: Product;
 
   constructor(
     private route: ActivatedRoute,
@@ -24,12 +19,18 @@ export class ProductDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.product$ = this.route.params
-      .pipe(
-        switchMap((params: Params) => {
-          return this.productsService.getProduct(params.id);
-        })
-      );
+    this.route.params.subscribe((params: Params) => {
+      const id = params.id;
+      this.fetchProduct(id);
+      // this.product = this.productsService.getProduct(id);
+    });
+  }
+
+  fetchProduct(id: string) {
+    this.productsService.getProduct(id)
+    .subscribe(product => {
+      this.product = product;
+    });
   }
 
   createProduct() {
@@ -41,9 +42,9 @@ export class ProductDetailComponent implements OnInit {
       description: 'nuevo producto'
     };
     this.productsService.createProduct(newProduct)
-      .subscribe(product => {
-        console.log(product);
-      });
+    .subscribe(product => {
+      console.log(product);
+    });
   }
 
   updateProduct() {
@@ -52,36 +53,16 @@ export class ProductDetailComponent implements OnInit {
       description: 'edicion titulo'
     };
     this.productsService.updateProduct('2', updateProduct)
-      .subscribe(product => {
-        console.log(product);
-      });
+    .subscribe(product => {
+      console.log(product);
+    });
   }
 
   deleteProduct() {
     this.productsService.deleteProduct('222')
-      .subscribe(rta => {
-        console.log(rta);
-      });
-  }
-
-  getRandomUsers() {
-    this.productsService.getRandomUsers()
-      .subscribe(
-        users => {
-          console.log(users);
-        },
-        error => {
-          console.log(error);
-        }
-      );
-  }
-
-  getFile() {
-    this.productsService.getFile()
-      .subscribe(content => {
-        var blob = new Blob([content], {type: 'text/plain;charset=utf-8'});
-        FileSaver.saveAs(blob, 'archivo.txt');
-      });
+    .subscribe(rta => {
+      console.log(rta);
+    });
   }
 
 }

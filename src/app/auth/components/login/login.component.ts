@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import { AuthService } from './../../../core/services/auth.service';
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -29,20 +30,13 @@ export class LoginComponent implements OnInit {
     if (this.form.valid) {
       const value = this.form.value;
       this.authService.login(value.email, value.password)
-        .then(() => {
-          this.router.navigate(['/admin']);
-        })
-        .catch(() => {
-          alert('no es valido');
-        });
-    }
-  }
-
-  loginApi() {
-    this.authService.loginRestApi('duvang@gma.com', '123456')
-      .subscribe(data => {
-        console.log(data);
+      .then(() => {
+        this.router.navigate(['/admin']);
+      })
+      .catch(() => {
+        alert('no es valido');
       });
+    }
   }
 
   private buildForm() {
