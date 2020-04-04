@@ -12,6 +12,7 @@ import { CartComponent } from './components/cart/cart.component';
 import { MaterialModule } from './../material/material.module';
 
 import { QuicklinkModule } from 'ngx-quicklink';
+import { FibonacciPipe } from './pipes/fibonacci.pipe';
 
 @NgModule({
   declarations: [
@@ -19,13 +20,15 @@ import { QuicklinkModule } from 'ngx-quicklink';
     HighlightDirective,
     HeaderComponent,
     FooterComponent,
-    CartComponent
+    CartComponent,
+    FibonacciPipe
   ],
   exports: [
     ExponentialPipe,
     HighlightDirective,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    FibonacciPipe
   ],
   imports: [
     CommonModule,
