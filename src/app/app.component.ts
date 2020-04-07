@@ -3,8 +3,14 @@ import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
 import { SwUpdate } from '@angular/service-worker';
+import { AngularFireMessaging } from '@angular/fire/messaging';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 
 declare var gtag;
+
+interface Token {
+  token: string;
+}
 
 @Component({
   selector: 'app-root',
@@ -12,10 +18,15 @@ declare var gtag;
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+
+  private tokenCollections: AngularFirestoreCollection<Token>;
+
   constructor(private router: Router,
     // tslint:disable-next-line: ban-types
     @Inject(PLATFORM_ID) private platformId: Object,
-    private swUpdate: SwUpdate
+    private swUpdate: SwUpdate,
+    private messaging: AngularFireMessaging,
+    private database: AngularFirestore
   ) {
     if (isPlatformBrowser(this.platformId)) {
       const navEndEvents$ = this.router.events
@@ -29,10 +40,14 @@ export class AppComponent implements OnInit {
         });
       });
     }
+
+    this.tokenCollections = this.database.collection<Token>('tokens');
   }
 
   ngOnInit() {
     this.updatePWA();
+    this.requestPermission();
+    this.listenNotifications();
   }
 
   updatePWA() {
@@ -40,6 +55,21 @@ export class AppComponent implements OnInit {
       .subscribe(value => {
         console.log('update:', value);
         window.location.reload();
+      });
+  }
+
+  requestPermission() {
+    this.messaging.requestToken
+      .subscribe(token => {
+        console.log(token);
+        this.tokenCollections.add({token});
+      });
+  }
+
+  listenNotifications() {
+    this.messaging.messages
+      .subscribe(message => {
+        console.log(message);
       })
   }
 
