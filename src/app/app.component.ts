@@ -1,7 +1,8 @@
-import { Component, PLATFORM_ID, Inject } from '@angular/core';
+import { Component, PLATFORM_ID, Inject, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
+import { SwUpdate } from '@angular/service-worker';
 
 declare var gtag;
 
@@ -10,10 +11,11 @@ declare var gtag;
   template: '<router-outlet></router-outlet>',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   constructor(private router: Router,
     // tslint:disable-next-line: ban-types
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private swUpdate: SwUpdate
   ) {
     if (isPlatformBrowser(this.platformId)) {
       const navEndEvents$ = this.router.events
@@ -28,4 +30,17 @@ export class AppComponent {
       });
     }
   }
+
+  ngOnInit() {
+    this.updatePWA();
+  }
+
+  updatePWA() {
+    this.swUpdate.available
+      .subscribe(value => {
+        console.log('update:', value);
+        window.location.reload();
+      })
+  }
+
 }
