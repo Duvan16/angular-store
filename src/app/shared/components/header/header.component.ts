@@ -19,12 +19,15 @@ export class HeaderComponent implements OnInit {
     private cartService: CartService
   ) {
     this.total$ = this.cartService.cart$
-    .pipe(
-      map(products => products.length)
-    );
+      .pipe(
+        map(products => products.length)
+      );
   }
 
-  @HostListener('window:beforeinstallpromp', ['$event'])
+  ngOnInit() {
+  }
+
+  @HostListener('window:beforeinstallprompt', ['$event'])
   onBeforeInstallPrompt(event: Event) {
     console.log(event);
     event.preventDefault();
@@ -38,10 +41,10 @@ export class HeaderComponent implements OnInit {
         .then(rta => {
           console.log(rta);
         });
+    } else {
+      console.log('no existe');
     }
   }
 
-  ngOnInit() {
-  }
 
 }
